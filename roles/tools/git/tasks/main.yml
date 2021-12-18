@@ -10,13 +10,13 @@
     name: init.defaultBranch
     value: main
 
-- name: Set default branch git
+- name: Set username
   community.general.git_config:
     scope: global
     name: user.name
     value: "{{ username }}"
 
-- name: Set default branch git
+- name: Set email
   community.general.git_config:
     scope: global
     name: user.email
