@@ -1,0 +1,37 @@
+---
+- name: Create folder strucutre
+  hosts: localhost
+  tasks:
+  - name: Create projects folder
+    ansible.builtin.file:
+      path: "~/projects"
+      state: directory
+      mode: 0644
+
+
+- name: Create ssh keys
+  hosts: localhost
+  tasks:
+  - name: Create ssh keys
+    community.crypto.openssh_keypair:
+      path: "~/.ssh/id_{{ item }}"
+      type: rsa
+      size: 4096
+      state: present
+      force: no
+    with_items:
+    - github
+    - gitlab
+    - zinsoldat
+
+- name: Install development tools
+  hosts: localhost
+  roles:
+  - role: tools/git
+    tags: git    
+
+- name: Install development Languages
+  hosts: localhost
+  roles:
+  - role: languages/go
+    tags: go
