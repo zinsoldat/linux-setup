@@ -14,10 +14,10 @@
   community.general.git_config:
     scope: global
     name: user.name
-    value: " {{ username }}"
+    value: "{{ username }}"
 
 - name: Set default branch git
   community.general.git_config:
     scope: global
     name: user.email
-    value: " {{ email }}"
+    value: "{{ email }}"
