@@ -28,7 +28,9 @@
   hosts: localhost
   roles:
   - role: tools/git
-    tags: git    
+    tags: git   
+  - role: tools/zsh
+    tags: zsh
 
 - name: Install development Languages
   hosts: localhost
