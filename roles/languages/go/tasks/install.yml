@@ -1,0 +1,30 @@
+---
+- name: Cretae folder
+  ansible.builtin.file:
+    path: "{{ go_path }}"
+    state: directory
+    mode: 0644
+
+- name: Download go archive
+  ansible.builtin.get_url:
+    url: "https://go.dev/dl/go{{ version }}.linux-amd64.tar.gz"
+    dest: /tmp/go.tar.gz
+
+- name: Delete old installation
+  become: yes
+  ansible.builtin.file:
+    path: "{{ installation_dest }}/go"
+    state: absent
+
+- name: Extract go archive
+  become: yes
+  ansible.builtin.unarchive:
+    src: /tmp/go.tar.gz
+    dest: "{{ installation_dest }}"
+
+- name: Add to path
+  become: yes
+  ansible.builtin.template:
+    src: env.sh.j2
+    dest: /etc/profile.d/go.sh
+    mode: 0644

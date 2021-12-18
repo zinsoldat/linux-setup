@@ -1,0 +1,19 @@
+---
+- name: Check if folder exists
+  ansible.builtin.stat:
+    path: "{{ installation_dest }}/go"
+  register: go_folder
+
+- name: Set go installed fact
+  ansible.builtin.set_fact:
+    go_installed: go_folder.stat.exists 
+
+- name: Get go version
+  ansible.builtin.command:
+    cmd: go version
+  when: go_installed
+  register: go_version_command
+
+- name: Set version
+  ansible.builtin.set_fact:
+    go_version_installed: "{{ go_version_command.stdout | regex_search('(\\d\\.\\d*\\.\\d*)') }}"
