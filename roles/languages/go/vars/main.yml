@@ -1,4 +1,5 @@
 ---
 installation_dest: /usr/local
-go_path: /home/zinsoldat/go
 version: 1.17.5
+username: zinsoldat
+go_path: /home/zinsoldat/go

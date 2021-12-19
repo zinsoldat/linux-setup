@@ -22,9 +22,33 @@
     src: /tmp/go.tar.gz
     dest: "{{ installation_dest }}"
 
-- name: Add to path
+- name: Get user
+  ansible.builtin.user:
+    name: "{{ username }}"
+  register: user_to_setup
+
+- name: Add to path for bash
   become: yes
   ansible.builtin.template:
     src: env.sh.j2
     dest: /etc/profile.d/go.sh
     mode: 0644
+  when: "'bash' in user_to_setup.shell"
+
+- name: Check if env is already set
+  ansible.builtin.shell:
+    cmd: "cat /home/{{ username }}/.zprofile | grep GOROOT | wc -l"
+  register: goroot_set
+  when: "'zsh' in user_to_setup.shell"
+
+- name: Add to path for zsh
+  ansible.builtin.lineinfile:
+    dest: "/home/{{ username }}/.zprofile"
+    line: |
+      GOROOT={{ installation_dest }}/go
+      GOPATH=/home/{{ username }}/go
+      PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+    state: present
+    create: yes
+    mode: 0644
+  when: "'zsh' in user_to_setup.shell and goroot_set.stdout == '0'" 
