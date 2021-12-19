@@ -5,9 +5,22 @@
     name: "{{ item }}"
     state: present
   with_items:
-  - zsh
   - fonts-powerline
   - curl
+
+- name: Install zsh
+  become: yes
+  ansible.builtin.apt:
+    name: zsh
+    state: present
+  register: zsh_install
+
+- name: Set zsh as default shell
+  become: true
+  ansible.builtin.command:
+    cmd: "chsh -s /usr/bin/zsh"
+  register: zsh_default_shell
+  changed_when: zsh_default_shell.rc != 0
 
 - name: Check if oh-my-zsh is installed
   ansible.builtin.stat:
@@ -22,6 +35,6 @@
 
 - name: Set as default shell
   ansible.builtin.script:
-    cmd: /tmp/zsh_install.sh
+    cmd: /tmp/zsh_install.sh --unattended
   when: not zsh_folder.stat.exists
 
