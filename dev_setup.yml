@@ -2,11 +2,17 @@
 - name: Create folder strucutre
   hosts: localhost
   tasks:
+  - name: Check if folder exists
+    ansible.builtin.stat:
+      path: "~/projects"
+    register: project_folder
+
   - name: Create projects folder
     ansible.builtin.file:
       path: "~/projects"
       state: directory
       mode: 0644
+    when: not project_folder.stat.exists 
 
 
 - name: Create ssh keys

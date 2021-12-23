@@ -1,19 +1,11 @@
 ---
-- name: Install packages
-  become: yes
-  ansible.builtin.apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-  - fonts-powerline
-  - curl
+- name: Install packages (debian)
+  ansible.builtin.import_tasks: debian.yml
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
-- name: Install zsh
-  become: yes
-  ansible.builtin.apt:
-    name: zsh
-    state: present
-  register: zsh_install
+- name: Install packages  (arch)
+  ansible.builtin.import_tasks: arch.yml
+  when: ansible_distribution == 'Archlinux'
 
 - name: Set zsh as default shell
   become: true

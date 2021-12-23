@@ -1,0 +1,16 @@
+---
+- name: Install packages
+  become: yes
+  ansible.builtin.pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - powerline-fonts
+  - curl
+
+- name: Install zsh
+  become: yes
+  ansible.builtin.pacman:
+    name: zsh
+    state: present
+  register: zsh_install

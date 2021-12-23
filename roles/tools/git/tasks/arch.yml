@@ -1,0 +1,5 @@
+---
+- name: Install git
+  ansible.builtin.pacman:
+    name: git
+    state: present
