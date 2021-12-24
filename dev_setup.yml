@@ -37,6 +37,10 @@
     tags: git   
   - role: tools/zsh
     tags: zsh
+  - role: tools/docker
+    tags: container/docker
+  - role: tools/podman
+    tags: container/podman
 
 - name: Install development Languages
   hosts: localhost
