@@ -1,0 +1,9 @@
+---
+- name: Install packages (debian)
+  ansible.builtin.import_tasks: debian.yml
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: Install packages (arch)
+  ansible.builtin.import_tasks: arch.yml
+  when: ansible_distribution == 'Archlinux'
+
