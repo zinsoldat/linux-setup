@@ -34,16 +34,24 @@
   hosts: localhost
   roles:
   - role: tools/git
-    tags: git   
+    tags: 
+    - git   
   - role: tools/zsh
-    tags: zsh
+    tags: 
+    - zsh
   - role: tools/docker
-    tags: container/docker
+    tags: 
+    - container/docker
   - role: tools/podman
-    tags: container/podman
+    tags: 
+    - container/podman
 
 - name: Install development Languages
   hosts: localhost
   roles:
   - role: languages/go
-    tags: go
+    tags: 
+    - go
+  - role: languages/rust
+    tags:
+    - rust
