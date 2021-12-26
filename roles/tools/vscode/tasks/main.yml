@@ -1,0 +1,12 @@
+---
+- name: Install snap
+  become: true
+  ansible.builtin.package:
+    name: snapd
+    state: present
+
+- name: Install VSCode
+  community.general.snap:
+    name: code
+    state: present
+    classic: true
