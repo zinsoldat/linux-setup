@@ -1,0 +1,7 @@
+---
+- name: Check if rust is installed
+  ansible.builtin.import_tasks: check_installed.yml
+
+- name: Install rust
+  ansible.builtin.import_tasks: install.yml
+  when: not rust_installed

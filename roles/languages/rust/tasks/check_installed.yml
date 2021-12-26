@@ -1,0 +1,15 @@
+---
+- name: Check if rust is installed
+  ansible.builtin.command:
+    cmd: rustup --version
+  register: rustup_version_command
+  changed_when: rustup_version_command.rc >= 0
+  ignore_errors: true
+
+- name: Set rust installed fact
+  ansible.builtin.set_fact:
+    rust_installed: "{{ rustup_version_command.rc == 0 }}"
+
+- name: Rustup installed result
+  ansible.builtin.debug:
+    msg: "{{ rust_installed }}"

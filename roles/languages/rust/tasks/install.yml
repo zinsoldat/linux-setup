@@ -1,0 +1,23 @@
+---
+- name: Download install script
+  ansible.builtin.get_url:
+    url: https://sh.rustup.rs
+    dest: "/home/{{ username }}/rustup.sh"
+    mode: 0777
+
+- name: Install rust
+  ansible.builtin.command:
+    cmd: "/home/{{ username }}/rustup.sh -y"
+  register: rustup_install_script
+  changed_when: rustup_install_script.rc == 0
+
+- name: Remove install script
+  ansible.builtin.file:
+    path: "/home/{{ username }}/rustup.sh"
+    state: absent
+
+- name: Setup env
+  ansible.builtin.command:
+    cmd: "source /home/{{ username }}/.cargo/env"
+  register: rustup_env
+  changed_when: rustup_env.rc == 0
