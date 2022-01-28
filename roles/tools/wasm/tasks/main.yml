@@ -1,0 +1,7 @@
+---
+- name: Check if wasm is installed
+  ansible.builtin.import_tasks: check_installed.yml
+
+- name: install wasm
+  ansible.builtin.import_tasks: install.yml
+  when: not wasm_installed

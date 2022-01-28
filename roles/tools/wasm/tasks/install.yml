@@ -1,0 +1,24 @@
+---
+- name: Cretae folder
+  ansible.builtin.file:
+    path: "{{ installation_dest }}"
+    state: directory
+    mode: 0644
+
+- name: Get latest wasm release tag
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/WebAssembly/wabt/releases/latest
+    return_content: true
+  register: latest_release_json
+
+- name: Download ubuntu archive
+  ansible.builtin.get_url:
+    url: "https://github.com/WebAssembly/wabt/releases/download/1.0.26/wabt-1.0.26-ubuntu.tar.gz"
+    dest: /tmp/wasm.tar.gz
+    mode: 0755
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: Extract wasm tools
+  ansible.builtin.unarchive:
+    src: /tmp/wasm.tar.gz
+    dest: "{{ installation_dest }}"
