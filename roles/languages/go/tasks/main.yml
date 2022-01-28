@@ -1,5 +1,5 @@
 ---
-- name: Check if ansible is installed
+- name: Check if go is installed
   ansible.builtin.import_tasks: check_installed.yml
 
 - name: install go

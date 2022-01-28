@@ -11,7 +11,7 @@
     ansible.builtin.file:
       path: "~/projects"
       state: directory
-      mode: 0644
+      mode: 0755
     when: not project_folder.stat.exists 
 
 
@@ -45,7 +45,16 @@
   - role: tools/podman
     tags: 
     - container/podman
-
+  - role: tools/vscode
+    tags:
+    - editor
+    - ide
+  - role: tools/intellij
+    tags:
+    - ide
+  - role: tools/wasm
+    tags:
+    - wasm
 - name: Install development Languages
   hosts: localhost
   roles:
