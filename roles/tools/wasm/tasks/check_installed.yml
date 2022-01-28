@@ -1,0 +1,19 @@
+---
+- name: Check if folder exists
+  ansible.builtin.stat:
+    path: "{{ installation_dest }}"
+  register: wasm_folder
+
+- name: Set wasm installed fact
+  ansible.builtin.set_fact:
+    wasm_installed: wasm_folder.stat.exists 
+
+- name: Get wasm version
+  ansible.builtin.command:
+    cmd: "{{ installation_dest }}/bin/wat2wasm --version"
+  when: wasm_installed
+  register: wasm_version_command
+
+- name: Set version
+  ansible.builtin.set_fact:
+    wasm_version_installed: "{{ wasm_version_command.stdout }}"
