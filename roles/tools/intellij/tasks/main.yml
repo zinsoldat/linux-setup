@@ -1,0 +1,28 @@
+---
+- name: Install snap
+  become: true
+  ansible.builtin.package:
+    name: snapd
+    state: present
+
+- name: Install goland
+  become: true
+  community.general.snap:
+    name: goland
+    state: present
+    classic: true
+
+- name: Install clion
+  become: true
+  community.general.snap:
+    name: clion
+    state: present
+    classic: true
+
+- name: Install intellij-idea-ultimate
+  become: true
+  community.general.snap:
+    name: intellij-idea-ultimate
+    state: present
+    classic: true
+    
