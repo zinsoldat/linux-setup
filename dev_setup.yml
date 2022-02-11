@@ -64,3 +64,6 @@
   - role: languages/rust
     tags:
     - rust
+  - role: languages/dart
+    tags:
+    - dart

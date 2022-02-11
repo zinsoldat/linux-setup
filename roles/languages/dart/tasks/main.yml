@@ -1,0 +1,33 @@
+---
+- name: Install packages
+  become: true
+  ansible.builtin.apt:
+    name: "apt-transport-https"
+    state: "present"
+    update_cache: true
+
+- name: Add dart repo key
+  become: true
+  ansible.builtin.apt_key:
+    url: "https://dl-ssl.google.com/linux/linux_signing_key.pub"
+    state: "present"
+
+- name: Add dart repo
+  become: true
+  ansible.builtin.get_url:
+    url: "https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list"
+    dest: "/etc/apt/sources.list.d/dart_stable.list"
+
+- name: Install dart
+  become: true
+  ansible.builtin.apt:
+    name: "dart"
+    state: "present"
+    update_cache: true
+    
+- name: Install flutter
+  become: true
+  community.general.snap:
+    name: flutter
+    state: present
+    classic: yes
