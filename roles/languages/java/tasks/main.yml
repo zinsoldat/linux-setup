@@ -1,0 +1,6 @@
+---
+- name: install java
+  become: true
+  ansible.builtin.apt:
+    name: openjdk-18-jdk,openjdk-18-doc
+    state: present

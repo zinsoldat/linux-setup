@@ -67,3 +67,6 @@
   - role: languages/dart
     tags:
     - dart
+  - role: languages/java
+    tags:
+    - java
